@@ -1,5 +1,5 @@
 - [TAB] Lab: Discover new potions by mixing components
-- [TAB] Shop: Buy components from merchants or make a contract with them to receive components periodically, you can also buy potions recipes
+- [TAB] Auction House: Buy components from merchants or make a contract with them to receive components periodically, you can also buy potions recipes
 - [TAB] Artisan's Consortium: Upgrade many mechanism by purchasing contracts with other artisans and many more (ie. buy the "Goblin rockets" upgrade to receive components more often)
 - [TAB] ???: Use known recipes to launch automatic potion making and make passive income
 - [TAB] Compendium: See all known potions and get tips for unknown potions
