@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+using TMPro;
+
 public class Potion : MonoBehaviour
 {
     /* GameObjects */
@@ -48,13 +50,13 @@ public class Potion : MonoBehaviour
         targetLevel = manager.quantity == -1 ? findMaxLevel() : currentLevel + manager.quantity;
 
         /* Display Informations */
-        Text clickButtonText = clickButton.GetComponentInChildren<Text>();
+        TextMeshProUGUI clickButtonText = clickButton.GetComponentInChildren<TextMeshProUGUI>();
         clickButtonText.text = currentLevel.ToString();
 
-        Text upgradeButtonText = upgradeButton.GetComponentInChildren<Text>();
+        TextMeshProUGUI upgradeButtonText = upgradeButton.GetComponentInChildren<TextMeshProUGUI>();
         upgradeButtonText.text = calculateCost(targetLevel).ToString(manager.floatPrecision) + " Gold";
 
-        Text goldValueText = goldValue.GetComponent<Text>();
+        TextMeshProUGUI goldValueText = goldValue.GetComponent<TextMeshProUGUI>();
         goldValueText.text = currentValue.ToString(manager.floatPrecision) + " Gold";
 
         return;

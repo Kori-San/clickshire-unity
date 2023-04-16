@@ -4,10 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+using TMPro;
+
 public class Balance : MonoBehaviour
 {
     private GameManager manager;
-    private Text textBox;
+    private TextMeshProUGUI textBox;
 
     // Start is called before the first frame update
     void Start()
@@ -16,7 +18,7 @@ public class Balance : MonoBehaviour
         manager = gameObjectFinder.GetComponent<GameManager>();
 
         gameObjectFinder = GameObject.Find("Balance");
-        textBox = gameObjectFinder.GetComponent<Text>();
+        textBox = gameObjectFinder.GetComponent<TextMeshProUGUI>();
     }
 
     // Update is called once per frame

@@ -4,18 +4,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+using TMPro;
+
 public class QuantityModifier : MonoBehaviour
 {
     private int[] quantities = new int[] { 1, 10, 100, -1 };
     private int currentIndex = 0;
 
     private GameManager manager;
-    private Text textBox;
+    private TextMeshProUGUI textBox;
 
     // Start is called before the first frame update
     void Start()
     {
-        textBox = transform.GetComponentInChildren<Text>();
+        //
+        textBox = transform.GetComponentInChildren<TextMeshProUGUI>();
 
         GameObject gameObjectFinder = GameObject.Find("GameManager");
         manager = gameObjectFinder.GetComponent<GameManager>();
