@@ -1,0 +1,8 @@
+[
+    {
+        "name": "HealingPotion",
+        "initCost": "3.738f",
+        "initValue": "1.0f",
+        "modifier": "1.07f"
+    }
+]

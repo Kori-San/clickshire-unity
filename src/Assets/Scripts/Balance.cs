@@ -17,13 +17,13 @@ public class Balance : MonoBehaviour
         GameObject gameObjectFinder = GameObject.Find("GameManager");
         manager = gameObjectFinder.GetComponent<GameManager>();
 
-        gameObjectFinder = GameObject.Find("Balance");
+        gameObjectFinder = GameObject.Find("GoldBalance");
         textBox = gameObjectFinder.GetComponent<TextMeshProUGUI>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        textBox.text = manager.gold.ToString(manager.floatPrecision) + " Gold";
+        textBox.text = manager.gold.ToString(manager.floatPrecision);
     }
 }

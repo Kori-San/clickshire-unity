@@ -47,22 +47,28 @@ public class Potion : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        targetLevel = manager.quantity == -1 ? findMaxLevel() : currentLevel + manager.quantity;
+        targetLevel = manager.quantity == -1 ? FindMaxLevel() : currentLevel + manager.quantity;
 
         /* Display Informations */
-        TextMeshProUGUI clickButtonText = clickButton.GetComponentInChildren<TextMeshProUGUI>();
-        clickButtonText.text = currentLevel.ToString();
+        ChangeChildTextMeshPro(clickButton, "", currentLevel.ToString());
 
-        TextMeshProUGUI upgradeButtonText = upgradeButton.GetComponentInChildren<TextMeshProUGUI>();
-        upgradeButtonText.text = calculateCost(targetLevel).ToString(manager.floatPrecision) + " Gold";
+        ChangeChildTextMeshPro(upgradeButton, "LevelCostText", CalculateCost(targetLevel).ToString(manager.floatPrecision) + " Gold");
+        ChangeChildTextMeshPro(upgradeButton, "LevelGainText", "x" + (targetLevel - currentLevel));
 
-        TextMeshProUGUI goldValueText = goldValue.GetComponent<TextMeshProUGUI>();
-        goldValueText.text = currentValue.ToString(manager.floatPrecision) + " Gold";
+        ChangeChildTextMeshPro(goldValue, "", currentValue.ToString(manager.floatPrecision) + " Gold");
 
         return;
     }
 
-    private float calculateCost(int targetLevel)
+    private void ChangeChildTextMeshPro(GameObject initialObject, string label, string textValue)
+    {
+        GameObject finalObject = initialObject.transform.Find(label).gameObject;
+        TextMeshProUGUI objectText = label == "" ? initialObject.GetComponentInChildren<TextMeshProUGUI>() : finalObject.GetComponent<TextMeshProUGUI>();  
+        objectText.text = textValue;
+        return;
+    }
+
+    private float CalculateCost(int targetLevel)
     {
         // https://www.kongregate.com/forums/9268-kongregate-published-games/topics/453018-adventure-capitalist-web-version-commonly-requested-formulas
         float targetModifier = (float)Math.Pow(modifier, targetLevel);
@@ -75,23 +81,18 @@ public class Potion : MonoBehaviour
         return targetCost; 
     }
 
-    private int findMaxLevel()
+    private int FindMaxLevel()
     {
         int maxLevel = currentLevel + 1;
-        float maxCost = calculateCost(maxLevel);
-
-        if (maxCost >= manager.gold)
-        {
-            return maxLevel;
-        }
+        float maxCost = CalculateCost(maxLevel);
 
         while (maxCost < manager.gold)
         {
             maxLevel++;
-            maxCost = calculateCost(maxLevel);
+            maxCost = CalculateCost(maxLevel);
         }
 
-        return maxLevel - 1; 
+        return maxLevel == currentLevel + 1 ? maxLevel : maxLevel - 1; 
     }
 
     public void Click()
@@ -101,7 +102,7 @@ public class Potion : MonoBehaviour
 
     public void Upgrade()
     {
-        float currentCost = calculateCost(targetLevel);
+        float currentCost = CalculateCost(targetLevel);
 
         if (manager.gold < currentCost)
         {
