@@ -10,64 +10,95 @@ using TMPro;
 public class Potion : MonoBehaviour
 {
     /* GameObjects */
-    private GameManager manager;
+    private GameManager manager; // GameManager - Unique to the scene
 
-    private GameObject clickButton;
-    private GameObject upgradeButton;
-    private GameObject goldValue;
-    
-    /* Initial Values - Get them from JSON later */
-    private float initCost = 3.738f;
-    private float initValue = 1.0f;
-    private float modifier = 1.07f;
+    private GameObject clickButton; // Click Button of THIS Potion
+    private GameObject upgradeButton; // Upgrade Button of THIS Potion
+    private GameObject goldValue; //  Text informing the value of THIS Potion
 
-    /* Current Values - Update for each level */
-    private float currentValue;
+    /* Initial Values - Used for calculations of Cost per level and Value per level */
+    // [TODO] Fetch from JSON and init it in GameManager
+    private float initCost = 3.738f; // Cost of level 1
+    private float initValue = 1.0f; // Value of level 1
+    private float modifier = 1.07f; // Cost modifier used for Cost Calculation
+
+    /* Current Value - Update every level */
+    private float currentValue; // Value gained when clicking THIS Potion
 
     /* Levels */
-    private int currentLevel = 1;
-    private int targetLevel = 1;
+    private int currentLevel = 1; // Current Level of THIS Potion
+    private int targetLevel = 1; // Target Level is the level target by the upgrade button
 
     // Start is called before the first frame update
     void Start()
     {
+        /* Find GameManager GameObject on whole scene since there is only one */
         GameObject gameObjectFinder = GameObject.Find("GameManager");
         manager = gameObjectFinder.GetComponent<GameManager>();
 
-        clickButton = transform.Find("ClickButton").gameObject;
-        upgradeButton = transform.Find("UpgradeButton").gameObject;
-        goldValue = transform.Find("GoldValue").gameObject;
+        /* Get 'Informations' GameObject of THIS Potion */
+        gameObjectFinder = transform.Find("Informations").gameObject;
 
+        /* Store 'ClickButton' of THIS Potion */
+        clickButton = transform.Find("ClickButton").gameObject;
+
+        /* Store both 'UpgradeButton' AND 'GoldValue' of THIS Potion */
+        upgradeButton = gameObjectFinder.transform.Find("UpgradeButton").gameObject;
+        goldValue = gameObjectFinder.transform.Find("GoldValue").gameObject;
+
+        /* [TEMP] Set sellValue to the initValue */
         currentValue = initValue;
 
-        // Charger la save
+        // [TODO] Load save 
         return;
     }
 
     // Update is called once per frame
     void Update()
     {
+        /* Set Target Level to either MaxLevel (maximum upgrade possible) or the value of the quantity button */
         targetLevel = manager.quantity == -1 ? FindMaxLevel() : currentLevel + manager.quantity;
 
         /* Display Informations */
         ChangeChildTextMeshPro(clickButton, "", currentLevel.ToString());
-
         ChangeChildTextMeshPro(upgradeButton, "LevelCostText", CalculateCost(targetLevel).ToString(manager.floatPrecision) + " Gold");
         ChangeChildTextMeshPro(upgradeButton, "LevelGainText", "x" + (targetLevel - currentLevel));
-
         ChangeChildTextMeshPro(goldValue, "", currentValue.ToString(manager.floatPrecision) + " Gold");
 
         return;
     }
 
+    /// This function changes the text value of a TextMeshProUGUI component in a given GameObject or its
+    /// child object.
+    /// 
+    /// Args:
+    ///   GameObject: The initial game object that contains the TextMeshProUGUI component that needs to be
+    ///               changed.
+    ///   label (string): The name of the child object whose TextMeshProUGUI component needs to be changed.
+    ///                   If label is an empty string, then the TextMeshProUGUI component of the initialObject's
+    ///                   first child will be changed.
+    ///   textValue (string): The new text value that will be assigned to the TextMeshProUGUI component.
+    /// 
+    /// Returns:
+    ///   The method is returning nothing (void).
     private void ChangeChildTextMeshPro(GameObject initialObject, string label, string textValue)
     {
         GameObject finalObject = initialObject.transform.Find(label).gameObject;
-        TextMeshProUGUI objectText = label == "" ? initialObject.GetComponentInChildren<TextMeshProUGUI>() : finalObject.GetComponent<TextMeshProUGUI>();  
+        TextMeshProUGUI objectText = label == "" ? initialObject.GetComponentInChildren<TextMeshProUGUI>() : finalObject.GetComponent<TextMeshProUGUI>();
         objectText.text = textValue;
+
         return;
     }
 
+    /// This function calculates the cost of reaching a target level in a game based on a specific formula.
+    /// 
+    /// Args:
+    ///   targetLevel (int): The level that the user wants to calculate the cost for.
+    /// 
+    /// Returns:
+    ///   The method is returning a float value which represents the cost to reach a certain target level in
+    ///   a game, based on a formula that takes into account the initial cost, a modifier, the current level,
+    ///   and the target level.
     private float CalculateCost(int targetLevel)
     {
         // https://www.kongregate.com/forums/9268-kongregate-published-games/topics/453018-adventure-capitalist-web-version-commonly-requested-formulas
@@ -78,9 +109,15 @@ public class Potion : MonoBehaviour
         float costDenominator = (modifier - 1.0f);
 
         float targetCost = costNumerator / costDenominator;
-        return targetCost; 
+        return targetCost;
     }
 
+    /// This function finds the maximum level that can be purchased based on the current level and available
+    /// gold.
+    /// 
+    /// Returns:
+    ///   The method is returning an integer value which represents the maximum level that can be purchased
+    ///   with the current amount of gold available.
     private int FindMaxLevel()
     {
         int maxLevel = currentLevel + 1;
@@ -92,25 +129,35 @@ public class Potion : MonoBehaviour
             maxCost = CalculateCost(maxLevel);
         }
 
-        return maxLevel == currentLevel + 1 ? maxLevel : maxLevel - 1; 
+        return maxLevel == currentLevel + 1 ? maxLevel : maxLevel - 1;
     }
 
+    /// The Click function adds the current value to the gold variable in the manager object.
+    ///
+    /// Returns:
+    ///   The method is returning nothing (void).
     public void Click()
     {
         manager.gold += currentValue;
     }
 
+    /// The Upgrade function updates the current value and level of an object if the player has enough gold
+    /// to pay for the upgrade cost.
+    /// 
+    /// Returns:
+    ///   If the manager's gold is less than the current cost, then the function returns without performing
+    ///   any further actions.
     public void Upgrade()
     {
         float currentCost = CalculateCost(targetLevel);
 
         if (manager.gold < currentCost)
         {
-            return; 
+            return;
         }
 
         manager.gold -= currentCost;
-        currentValue = targetLevel * initValue; 
+        currentValue = targetLevel * initValue;
         currentLevel = targetLevel;
     }
 }
