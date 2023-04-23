@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 public class MaterialItem {
     public string name;
@@ -25,5 +25,18 @@ public class Material : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void Click()
+    {
+        selected = !selected;
+
+        if (selected)
+        {
+            this.gameObject.GetComponent<Image>().color = Color.white;
+            return;
+        }
+        
+        this.gameObject.GetComponent<Image>().color = Color.clear;
     }
 }
