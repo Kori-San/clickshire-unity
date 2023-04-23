@@ -19,10 +19,11 @@ public class Potion : MonoBehaviour
     public string filePath; // Path of Data file
 
     /* Initial Values - Used for calculations of Cost per level and Value per level */
-    // [TODO] Fetch from JSON and init it in GameManager
+    public string potionName;
     public float initCost; // Cost of level 1
     public float initValue; // Value of level 1
     public float modifier; // Cost modifier used for Cost Calculation
+    public string[] materials;
 
     /* Current Value - Update every level */
     private float currentValue; // Value gained when clicking THIS Potion
@@ -125,7 +126,7 @@ public class Potion : MonoBehaviour
         int maxLevel = currentLevel + 1;
         float maxCost = CalculateCost(maxLevel);
 
-        while (maxCost < manager.gold)
+        while (maxCost < manager.gold && (maxLevel - currentLevel) <= 1000) // Maximum 1000 level diff
         {
             maxLevel++;
             maxCost = CalculateCost(maxLevel);
@@ -161,5 +162,8 @@ public class Potion : MonoBehaviour
         manager.gold -= currentCost;
         currentValue = targetLevel * initValue;
         currentLevel = targetLevel;
+
+        PotionItem tempPotion = PotionItem.CreateFromPotion(this);
+        tempPotion.SaveToJSON(filePath);
     }
 }

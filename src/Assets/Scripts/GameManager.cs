@@ -1,5 +1,6 @@
+using System;
 using System.IO;
-
+using System.Text;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -18,6 +19,26 @@ public class PotionItem
     public static PotionItem CreateFromJSON(string jsonString)
     {
         return JsonUtility.FromJson<PotionItem>(jsonString);
+    }
+
+    public static PotionItem CreateFromPotion(Potion potion)
+    {
+        PotionItem returnedPotion = new PotionItem();
+
+        returnedPotion.name = potion.potionName;
+        returnedPotion.initCost = potion.initCost;
+        returnedPotion.initValue = potion.initValue;
+        returnedPotion.modifier = potion.modifier;
+        returnedPotion.level = potion.currentLevel;
+        returnedPotion.materials = potion.materials;
+
+        return returnedPotion;
+    }
+
+    public void SaveToJSON(string filePath)
+    {
+        string json = JsonUtility.ToJson(this) + Environment.NewLine;
+        File.WriteAllText(filePath, json);
     }
 }
 
@@ -42,7 +63,16 @@ public class GameManager : MonoBehaviour
 
         // [TEMP] Set gold to 0.
         gold = 0.0f;
+        loadPotions();
+    }
 
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+
+    public void loadPotions() {
         DirectoryInfo dir = new DirectoryInfo("Assets/Data/Potions");
         FileInfo[] files = dir.GetFiles("*.json");
 
@@ -56,21 +86,18 @@ public class GameManager : MonoBehaviour
             if (potion.level > 0) {
                 /* Create new potion prefab */
                 GameObject potionPrefabInstance = (GameObject)Instantiate(potionPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+
+                potionPrefabInstance.GetComponent<Potion>().potionName = potion.name;
                 potionPrefabInstance.GetComponent<Potion>().initCost = potion.initCost;
                 potionPrefabInstance.GetComponent<Potion>().initValue = potion.initValue;
                 potionPrefabInstance.GetComponent<Potion>().modifier = potion.modifier;
                 potionPrefabInstance.GetComponent<Potion>().currentLevel = potion.level;
+                potionPrefabInstance.GetComponent<Potion>().materials = potion.materials;
                 potionPrefabInstance.GetComponent<Potion>().filePath = file.FullName;
 
                 GameObject container = GameObject.Find("PotionContainer");
                 potionPrefabInstance.transform.SetParent(container.transform);
             }
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 }

@@ -1,8 +1,8 @@
 {
     "name": "disabled_potion",
-    "initCost": 0,
-    "initValue": 0,
-    "modifier": 0,
+    "initCost": 18.69,
+    "initValue": 5.0,
+    "modifier": 5.35,
     "level": 0,
     "materials": [
         "material1",
