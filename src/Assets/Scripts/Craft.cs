@@ -46,13 +46,17 @@ public class Craft : MonoBehaviour
 
     public void CraftPotion()
     {
-        List<string> materialNameCraft = materialCraft.Select(item => item.name).ToList();
-        foreach (var potion in potions)
+        if (materialCraft.Count == 0)
         {
-            if (materialNameCraft.Intersect(potion.materials.ToList()).Count() == materialNameCraft.Count())
+            return;
+        }
+        List<string> materialNameCraft = materialCraft.Select(item => item.nameMaterial).ToList();
+        foreach (var potion in potions)
+        {          
+            if (potion.materials.ToList().Intersect(materialNameCraft).Count() == potion.materials.ToList().Count())
             {
                 Debug.Log(true);
-                // TODO Write in json file : set level to 1
+                return;
             }
         }
     } 
