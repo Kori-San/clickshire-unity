@@ -73,6 +73,12 @@ public class GameManager : MonoBehaviour
     }
 
     public void loadPotions() {
+        GameObject container = GameObject.Find("PotionContainer");
+
+        foreach (Transform child in container.transform) {
+            GameObject.Destroy(child.gameObject);
+        }
+
         DirectoryInfo dir = new DirectoryInfo("Assets/Data/Potions");
         FileInfo[] files = dir.GetFiles("*.json");
 
@@ -95,7 +101,6 @@ public class GameManager : MonoBehaviour
                 potionPrefabInstance.GetComponent<Potion>().materials = potion.materials;
                 potionPrefabInstance.GetComponent<Potion>().filePath = file.FullName;
 
-                GameObject container = GameObject.Find("PotionContainer");
                 potionPrefabInstance.transform.SetParent(container.transform);
             }
         }
