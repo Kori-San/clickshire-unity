@@ -60,12 +60,12 @@ public class GameManager : MonoBehaviour
                 potionPrefabInstance.GetComponent<Potion>().initValue = potion.initValue;
                 potionPrefabInstance.GetComponent<Potion>().modifier = potion.modifier;
                 potionPrefabInstance.GetComponent<Potion>().currentLevel = potion.level;
+                potionPrefabInstance.GetComponent<Potion>().filePath = file.FullName;
 
                 GameObject container = GameObject.Find("PotionContainer");
                 potionPrefabInstance.transform.SetParent(container.transform);
             }
         }
-
     }
 
     // Update is called once per frame
