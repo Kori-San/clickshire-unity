@@ -43,15 +43,29 @@ public class GameManager : MonoBehaviour
         // [TEMP] Set gold to 0.
         gold = 0.0f;
 
-         DirectoryInfo dir = new DirectoryInfo("Assets/Data/Potions");
-         FileInfo[] files = dir.GetFiles("*.json");
+        DirectoryInfo dir = new DirectoryInfo("Assets/Data/Potions");
+        FileInfo[] files = dir.GetFiles("*.json");
 
+        /* For each JSON file in the dir */
         foreach (var file in files) {
+            /* Get content of file and create PotionItem */
             string JSONContent = File.ReadAllText(file.FullName);
             PotionItem potion = PotionItem.CreateFromJSON(JSONContent);
-            Debug.Log(potion.name);
-        }
 
+            /* If Potion is unlocked */
+            if (potion.level > 0) {
+                /* Create new potion prefab */
+                GameObject potionPrefabInstance = (GameObject)Instantiate(potionPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+                potionPrefabInstance.GetComponent<Potion>().initCost = potion.initCost;
+                potionPrefabInstance.GetComponent<Potion>().initValue = potion.initValue;
+                potionPrefabInstance.GetComponent<Potion>().modifier = potion.modifier;
+                potionPrefabInstance.GetComponent<Potion>().currentLevel = potion.level;
+                potionPrefabInstance.GetComponent<Potion>().filePath = file.FullName;
+
+                GameObject container = GameObject.Find("PotionContainer");
+                potionPrefabInstance.transform.SetParent(container.transform);
+            }
+        }
     }
 
     // Update is called once per frame

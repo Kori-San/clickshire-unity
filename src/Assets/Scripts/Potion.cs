@@ -14,7 +14,9 @@ public class Potion : MonoBehaviour
 
     private GameObject clickButton; // Click Button of THIS Potion
     private GameObject upgradeButton; // Upgrade Button of THIS Potion
-    private GameObject goldValue; //  Text informing the value of THIS Potion
+    private GameObject goldValue; // Text informing the value of THIS Potion
+
+    public string filePath; // Path of Data file
 
     /* Initial Values - Used for calculations of Cost per level and Value per level */
     // [TODO] Fetch from JSON and init it in GameManager
