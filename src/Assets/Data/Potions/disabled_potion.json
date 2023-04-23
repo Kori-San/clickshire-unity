@@ -1,0 +1,11 @@
+{
+    "name": "disabled_potion",
+    "initCost": 0,
+    "initValue": 0,
+    "modifier": 0,
+    "level": 0,
+    "materials": [
+        "material1",
+        "material2"
+    ]
+}

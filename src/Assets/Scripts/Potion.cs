@@ -18,15 +18,15 @@ public class Potion : MonoBehaviour
 
     /* Initial Values - Used for calculations of Cost per level and Value per level */
     // [TODO] Fetch from JSON and init it in GameManager
-    private float initCost = 3.738f; // Cost of level 1
-    private float initValue = 1.0f; // Value of level 1
-    private float modifier = 1.07f; // Cost modifier used for Cost Calculation
+    public float initCost; // Cost of level 1
+    public float initValue; // Value of level 1
+    public float modifier; // Cost modifier used for Cost Calculation
 
     /* Current Value - Update every level */
     private float currentValue; // Value gained when clicking THIS Potion
 
     /* Levels */
-    private int currentLevel = 1; // Current Level of THIS Potion
+    public int currentLevel; // Current Level of THIS Potion
     private int targetLevel = 1; // Target Level is the level target by the upgrade button
 
     // Start is called before the first frame update

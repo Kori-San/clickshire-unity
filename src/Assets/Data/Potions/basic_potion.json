@@ -1,0 +1,11 @@
+{
+    "name": "basic_potion",
+    "initCost": 3.738,
+    "initValue": 1.0,
+    "modifier": 1.07,
+    "level": 1,
+    "materials": [
+        "material1",
+        "material2"
+    ]
+}
