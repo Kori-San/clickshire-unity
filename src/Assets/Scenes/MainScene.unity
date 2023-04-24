@@ -3687,7 +3687,7 @@ GameObject:
   - component: {fileID: 1790423089}
   - component: {fileID: 1790423088}
   - component: {fileID: 1790423087}
-  - component: {fileID: 1790423091}
+  - component: {fileID: 1793913155}
   m_Layer: 5
   m_Name: CraftButton
   m_TagString: Untagged
@@ -3772,7 +3772,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1790423091}
+      - m_Target: {fileID: 1793913155}
         m_TargetAssemblyTypeName: DialogTrigger, Assembly-CSharp
         m_MethodName: TriggerDialog
         m_Mode: 1
@@ -3843,7 +3843,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1793913154}
-  - component: {fileID: 1793913155}
+  - component: {fileID: 1793913156}
   m_Layer: 5
   m_Name: PotionInfoContainer
   m_TagString: Untagged
@@ -3884,6 +3884,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialog: {fileID: 499974725}
+--- !u!114 &1793913156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1793913153}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -3899,7 +3905,7 @@ MonoBehaviour:
   m_StartCorner: 0
   m_StartAxis: 0
   m_CellSize: {x: 175, y: 250}
-  m_Spacing: {x: 30, y: 30}
+  m_Spacing: {x: 50, y: 50}
   m_Constraint: 0
   m_ConstraintCount: 2
 --- !u!1 &1861833897
