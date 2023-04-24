@@ -59,7 +59,7 @@ public class GameManager : MonoBehaviour
 
         materialCraftContainer = FindInActiveObjectByName("MaterialContainer");
 
-        //materialHDVContainer = FindInActiveObjectByName("Shop");
+        materialHDVContainer = FindInActiveObjectByName("MaterialShop");
 
         loadPotions();
         loadAllMaterials();
@@ -122,6 +122,7 @@ public class GameManager : MonoBehaviour
     public void loadAllMaterials()
     {   
         loadMaterials(materialCraftContainer, materialCraftPrefab);
+        loadMaterials(materialHDVContainer, materialPrefab);
     }
 
     public void loadMaterials(GameObject parent, GameObject prefab) {
