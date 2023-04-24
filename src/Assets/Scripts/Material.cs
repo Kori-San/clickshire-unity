@@ -93,5 +93,6 @@ public class Material : MonoBehaviour
 
         MaterialItem tempMaterial = MaterialItem.CreateFromMaterial(this);
         tempMaterial.SaveToJSON(filePath);
+        manager.loadAllMaterials();
     }
 }

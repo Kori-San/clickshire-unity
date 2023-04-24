@@ -36,11 +36,9 @@ public class GameManager : MonoBehaviour
 {
     /* Prefabs */
     public GameObject potionPrefab;
+    public GameObject potionInfoPrefab;
     public GameObject materialPrefab;
     public GameObject materialCraftPrefab;
-
-    public GameObject potionInfoPrefab;
-    public GameObject potionInfoContainer;
 
     /* Player's variables */
     [HideInInspector]
@@ -48,6 +46,7 @@ public class GameManager : MonoBehaviour
     public int quantity; // Current quantity modifier - See QuantityModifier.cs for more details
 
     private GameObject potionContainer;
+    private GameObject potionInfoContainer;
     private GameObject materialCraftContainer;
     private GameObject materialHDVContainer;
 
@@ -58,10 +57,10 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         gold = UserData.Load().gold;
-        potionContainer = GameObject.Find("PotionContainer");
 
+        potionContainer = FindInActiveObjectByName("PotionContainer");
+        potionInfoContainer = FindInActiveObjectByName("PotionInfoContainer");
         materialCraftContainer = FindInActiveObjectByName("MaterialContainer");
-
         materialHDVContainer = FindInActiveObjectByName("MaterialShop");
 
         loadPotions();
@@ -156,6 +155,11 @@ public class GameManager : MonoBehaviour
     }
 
     public void loadMaterials(GameObject parent, GameObject prefab) {
+        foreach (Transform child in parent.transform) {
+            if (child != null) {
+                GameObject.Destroy(child.gameObject);
+            }
+        }
         DirectoryInfo dir = new DirectoryInfo("Assets/Data/Materials");
         FileInfo[] files = dir.GetFiles("*.json");
 

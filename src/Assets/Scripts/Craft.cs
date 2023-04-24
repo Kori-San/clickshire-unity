@@ -25,6 +25,8 @@ public class Craft : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+        materials =  GameObject.FindGameObjectsWithTag("material");
         foreach (GameObject materialGameObject in materials)
         {
             Material material = materialGameObject.GetComponent<Material>();
@@ -52,13 +54,27 @@ public class Craft : MonoBehaviour
         List<string> materialNameCraft = materialCraft.Select(item => item.nameMaterial).ToList();
         
         DirectoryInfo dir = new DirectoryInfo("Assets/Data/Potions");
-        FileInfo[] files = dir.GetFiles("*.json");
+        FileInfo[] files = dir.GetFiles("*.json");   
+
+        DirectoryInfo materialDir = new DirectoryInfo("Assets/Data/Materials");
+        FileInfo[] materialFiles = materialDir.GetFiles("*.json");
         
         foreach (var material in materialCraft)
         {
             material.quantity--;
             material.selected = false;
             material.ChangeBackground();
+            foreach(var materialFile in materialFiles)
+            {
+                string JSONContent = File.ReadAllText(materialFile.FullName);
+                MaterialItem materialItem = MaterialItem.CreateFromJSON(JSONContent);
+                if (materialItem.name == material.nameMaterial)
+                {
+                    materialItem.quantity = material.quantity;
+                    materialItem.SaveToJSON(materialFile.FullName);
+                }
+            }
+
         }
         foreach (var file in files) {
             string JSONContent = File.ReadAllText(file.FullName);
