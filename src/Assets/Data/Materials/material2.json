@@ -1,4 +1,6 @@
 {
     "name": "material2",
-    "quantity": 1
+    "quantity": 1,
+    "cost": 20,
+    "selected": false
 }

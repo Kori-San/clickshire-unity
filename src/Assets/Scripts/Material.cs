@@ -7,6 +7,24 @@ public class MaterialItem {
     public string name;
     public int quantity;
     public bool selected;
+    public int cost;
+
+    public static MaterialItem CreateFromJSON(string jsonString)
+    {
+        return JsonUtility.FromJson<MaterialItem>(jsonString);
+    }
+
+    public static MaterialItem CreateFromMaterial(Material Material)
+    {
+        MaterialItem returnedMaterial = new MaterialItem();
+
+        returnedMaterial.name = material.materialName;
+        returnedMaterial.quantity = material.quantity;
+        returnedMaterial.selected = material.selected;
+        returnedMaterial.cost = material.cost;
+        
+        return returnedMaterial;
+    }
 }
 
 public class Material : MonoBehaviour
@@ -18,6 +36,8 @@ public class Material : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameObject gameObjectFinder = GameObject.Find("GameManager");
+        manager = gameObjectFinder.GetComponent<GameManager>();
 
     }
 
@@ -38,5 +58,11 @@ public class Material : MonoBehaviour
         }
         
         this.gameObject.GetComponent<Image>().color = Color.clear;
+    }
+
+    public void Buy()
+    {
+        manager.gold -= cost;
+        quantity += 1;
     }
 }
