@@ -14,7 +14,7 @@ public class Material : MonoBehaviour
     public string nameMaterial = "";
     public int quantity = 1;
     public bool selected = false;
-    
+
     // Start is called before the first frame update
     void Start()
     {

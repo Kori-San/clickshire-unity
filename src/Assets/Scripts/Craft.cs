@@ -8,6 +8,7 @@ using System.Linq;
 public class Craft : MonoBehaviour
 {
     private GameObject[] materials;
+    private GameManager manager;
     
     List<Material> materialCraft = new List<Material>();
 
@@ -16,14 +17,8 @@ public class Craft : MonoBehaviour
     void Start()
     {
         materials =  GameObject.FindGameObjectsWithTag("material");
-
-        DirectoryInfo dir = new DirectoryInfo("Assets/Data/Potions");
-        FileInfo[] files = dir.GetFiles("*.json");
-
-        foreach (var file in files) {
-            string JSONContent = File.ReadAllText(file.FullName);
-            potions.Add(PotionItem.CreateFromJSON(JSONContent));
-        }
+        GameObject gameObjectFinder = GameObject.Find("GameManager");
+        manager = gameObjectFinder.GetComponent<GameManager>();
     }
 
     // Update is called once per frame
@@ -51,11 +46,20 @@ public class Craft : MonoBehaviour
             return;
         }
         List<string> materialNameCraft = materialCraft.Select(item => item.nameMaterial).ToList();
-        foreach (var potion in potions)
-        {          
-            if (potion.materials.ToList().Intersect(materialNameCraft).Count() == potion.materials.ToList().Count())
+        
+        DirectoryInfo dir = new DirectoryInfo("Assets/Data/Potions");
+        FileInfo[] files = dir.GetFiles("*.json");
+
+        foreach (var file in files) {
+            string JSONContent = File.ReadAllText(file.FullName);
+            PotionItem potion = PotionItem.CreateFromJSON(JSONContent);
+         
+            if (potion.level == 0 && potion.materials.ToList().Intersect(materialNameCraft).Count() == potion.materials.ToList().Count())
             {
                 Debug.Log(true);
+                potion.level = 1;
+                potion.SaveToJSON(file.FullName);
+                manager.loadPotions();
                 return;
             }
         }
