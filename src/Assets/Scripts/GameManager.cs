@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour
 
         materialCraftContainer = FindInActiveObjectByName("MaterialContainer");
 
-        materialHDVContainer = FindInActiveObjectByName("MaterialShop");
+        materialHDVContainer = FindInActiveObjectByName("MatShop");
 
         loadPotions();
         loadPotionsInfo();
