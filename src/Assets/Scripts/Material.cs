@@ -36,6 +36,7 @@ public class Material : MonoBehaviour
     public float cost;
     public bool selected = false;
 
+    public string filePath;
     // Start is called before the first frame update
     void Start()
     {
