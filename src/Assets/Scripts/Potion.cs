@@ -2,10 +2,50 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
+using System;
+using System.IO;
+using System.Text;
+
 using UnityEngine;
 using UnityEngine.UI;
 
 using TMPro;
+
+[System.Serializable]
+public class PotionItem
+{
+    public string name;
+    public float initCost;
+    public float initValue;
+    public float modifier;
+    public int level;
+    public string[] materials;
+
+    public static PotionItem CreateFromJSON(string jsonString)
+    {
+        return JsonUtility.FromJson<PotionItem>(jsonString);
+    }
+
+    public static PotionItem CreateFromPotion(Potion potion)
+    {
+        PotionItem returnedPotion = new PotionItem();
+
+        returnedPotion.name = potion.potionName;
+        returnedPotion.initCost = potion.initCost;
+        returnedPotion.initValue = potion.initValue;
+        returnedPotion.modifier = potion.modifier;
+        returnedPotion.level = potion.currentLevel;
+        returnedPotion.materials = potion.materials;
+
+        return returnedPotion;
+    }
+
+    public void SaveToJSON(string filePath)
+    {
+        string json = JsonUtility.ToJson(this) + Environment.NewLine;
+        File.WriteAllText(filePath, json);
+    }
+}
 
 public class Potion : MonoBehaviour
 {
