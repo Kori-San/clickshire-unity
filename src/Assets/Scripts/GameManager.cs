@@ -6,6 +6,32 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
+[System.Serializable]
+public class UserData
+{
+    public float gold;
+
+    public static UserData Load()
+    {
+        FileInfo data = new FileInfo("Assets/Data/User.json");
+        string JSONContent = File.ReadAllText(data.FullName);
+        return JsonUtility.FromJson<UserData>(JSONContent);
+    }
+
+    public static void Save()
+    {
+        /* Find GameManager GameObject on whole scene since there is only one */
+        GameObject gameObjectFinder = GameObject.Find("GameManager");
+        GameManager manager = gameObjectFinder.GetComponent<GameManager>();
+
+        UserData tempData = new UserData();
+        tempData.gold = manager.gold;
+        FileInfo data = new FileInfo("Assets/Data/User.json");
+        string json = JsonUtility.ToJson(tempData) + Environment.NewLine;
+        File.WriteAllText(data.FullName, json);
+    }
+}
+
 public class GameManager : MonoBehaviour
 {
     /* Prefabs */
@@ -24,8 +50,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // [TEMP] Set gold to 0.
-        gold = 0.0f;
+        gold = UserData.Load().gold;
         potionContainer = GameObject.Find("PotionContainer");
 
         loadPotions();

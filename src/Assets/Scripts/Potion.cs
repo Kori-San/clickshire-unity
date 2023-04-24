@@ -184,6 +184,7 @@ public class Potion : MonoBehaviour
     public void Click()
     {
         manager.gold += currentValue;
+        UserData.Save();
     }
 
     /// The Upgrade function updates the current value and level of an object if the player has enough gold
@@ -202,6 +203,8 @@ public class Potion : MonoBehaviour
         }
 
         manager.gold -= currentCost;
+        UserData.Save();
+
         currentValue = CalculateValue(targetLevel);
         currentLevel = targetLevel;
 
