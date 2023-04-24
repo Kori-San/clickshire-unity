@@ -4,5 +4,6 @@
     "initValue": 1.0,
     "modifier": 1.0700000524520875,
     "level": 119,
-    "materials": []
+    "materials": [],
+    "known": true
 }

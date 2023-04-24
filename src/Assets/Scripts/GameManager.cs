@@ -39,6 +39,9 @@ public class GameManager : MonoBehaviour
     public GameObject materialPrefab;
     public GameObject materialCraftPrefab;
 
+    public GameObject potionInfoPrefab;
+    public GameObject potionInfoContainer;
+
     /* Player's variables */
     [HideInInspector]
     public float gold; // Total Gold of the player
@@ -59,9 +62,10 @@ public class GameManager : MonoBehaviour
 
         materialCraftContainer = FindInActiveObjectByName("MaterialContainer");
 
-        materialHDVContainer = FindInActiveObjectByName("MaterialShop");
+        materialHDVContainer = FindInActiveObjectByName("MatShop");
 
         loadPotions();
+        loadPotionsInfo();
         loadAllMaterials();
     }
 
@@ -117,6 +121,32 @@ public class GameManager : MonoBehaviour
                 potionPrefabInstance.transform.SetParent(potionContainer.transform);
             }
         }
+    }
+
+    public void loadPotionsInfo() {
+        foreach (Transform child in potionInfoContainer.transform) {
+            GameObject.Destroy(child.gameObject);
+        }
+
+        DirectoryInfo dir = new DirectoryInfo("Assets/Data/Potions");
+        FileInfo[] files = dir.GetFiles("*.json");
+
+        /* For each JSON file in the dir */
+        foreach (var file in files) {
+            /* Get content of file and create PotionItem */
+            string JSONContent = File.ReadAllText(file.FullName);
+
+            PotionItem potion = PotionItem.CreateFromJSON(JSONContent);
+
+                /* Create new potion prefab */
+                GameObject potionInfoPrefabInstance = (GameObject)Instantiate(potionInfoPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+                potionInfoPrefabInstance.GetComponent<PotionInfo>().potionName = potion.name;
+                potionInfoPrefabInstance.GetComponent<PotionInfo>().materials = potion.materials;
+                potionInfoPrefabInstance.GetComponent<PotionInfo>().known = potion.known;
+                potionInfoPrefabInstance.GetComponent<PotionInfo>().level = potion.level;
+
+                potionInfoPrefabInstance.transform.SetParent(potionInfoContainer.transform);
+            }
     }
 
     public void loadAllMaterials()
