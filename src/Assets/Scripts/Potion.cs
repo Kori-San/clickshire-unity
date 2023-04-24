@@ -19,6 +19,7 @@ public class PotionItem
     public float modifier;
     public int level;
     public string[] materials;
+    public bool known;
 
     public static PotionItem CreateFromJSON(string jsonString)
     {

@@ -7,5 +7,6 @@
     "materials": [
         "material0",
         "material2"
-    ]
+    ],
+    "known": true
 }
