@@ -6,10 +6,37 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
+[System.Serializable]
+public class UserData
+{
+    public float gold;
+
+    public static UserData Load()
+    {
+        FileInfo data = new FileInfo("Assets/Data/User.json");
+        string JSONContent = File.ReadAllText(data.FullName);
+        return JsonUtility.FromJson<UserData>(JSONContent);
+    }
+
+    public static void Save()
+    {
+        /* Find GameManager GameObject on whole scene since there is only one */
+        GameObject gameObjectFinder = GameObject.Find("GameManager");
+        GameManager manager = gameObjectFinder.GetComponent<GameManager>();
+
+        UserData tempData = new UserData();
+        tempData.gold = manager.gold;
+        FileInfo data = new FileInfo("Assets/Data/User.json");
+        string json = JsonUtility.ToJson(tempData) + Environment.NewLine;
+        File.WriteAllText(data.FullName, json);
+    }
+}
+
 public class GameManager : MonoBehaviour
 {
     /* Prefabs */
     public GameObject potionPrefab;
+    public GameObject materialPrefab;
 
     /* Player's variables */
     [HideInInspector]
@@ -17,6 +44,8 @@ public class GameManager : MonoBehaviour
     public int quantity; // Current quantity modifier - See QuantityModifier.cs for more details
 
     private GameObject potionContainer;
+    private GameObject materialCraftContainer;
+    private GameObject materialHDVContainer;
 
     /* Parameters */
     public string floatPrecision = "n2"; // Precision of float type used among all scripts
@@ -24,11 +53,13 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // [TEMP] Set gold to 0.
-        gold = 0.0f;
+        gold = UserData.Load().gold;
         potionContainer = GameObject.Find("PotionContainer");
+        materialCraftContainer = GameObject.Find("MaterialContainer");
+        materialHDVContainer = GameObject.Find("Shop");
 
         loadPotions();
+        loadAllMaterials();
     }
 
     // Update is called once per frame
@@ -66,6 +97,33 @@ public class GameManager : MonoBehaviour
 
                 potionPrefabInstance.transform.SetParent(potionContainer.transform);
             }
+        }
+    }
+
+    public void loadAllMaterials()
+    {
+        loadMaterials(materialCraftContainer);
+        //loadMaterials(materialHDVContainer);
+    }
+
+    public void loadMaterials(GameObject parent) {
+        DirectoryInfo dir = new DirectoryInfo("Assets/Data/Materials");
+        FileInfo[] files = dir.GetFiles("*.json");
+
+        /* For each JSON file in the dir */
+        foreach (var file in files) {
+            /* Get content of file and create PotionItem */
+            string JSONContent = File.ReadAllText(file.FullName);
+            MaterialItem material = MaterialItem.CreateFromJSON(JSONContent);
+            /* Create new potion prefab */
+            GameObject materialPrefabInstance = (GameObject)Instantiate(materialPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+
+            materialPrefabInstance.GetComponent<Material>().nameMaterial = material.name;
+            materialPrefabInstance.GetComponent<Material>().quantity = material.quantity;
+            materialPrefabInstance.GetComponent<Material>().selected = material.selected;
+            materialPrefabInstance.GetComponent<Material>().cost = material.cost;
+            materialPrefabInstance.GetComponent<Material>().filePath = file.FullName;
+            materialPrefabInstance.transform.SetParent(parent.transform);
         }
     }
 }

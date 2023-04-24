@@ -47,6 +47,7 @@ public class Material : MonoBehaviour
     public float cost;
     public bool selected = false;
 
+    public string filePath;
     // Start is called before the first frame update
     void Start()
     {
@@ -62,8 +63,16 @@ public class Material : MonoBehaviour
 
     public void Click()
     {
+        if (quantity < 1)
+        {
+            return;
+        }
         selected = !selected;
+        ChangeBackground();
+    }
 
+    public void ChangeBackground()
+    {
         if (selected)
         {
             this.gameObject.GetComponent<Image>().color = Color.white;

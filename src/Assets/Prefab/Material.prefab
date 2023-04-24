@@ -718,11 +718,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80833d4c69cbf3749801439b7857b234, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  filePath: 
   nameMaterial: 
-  quantity: 0
+  quantity: 1
   cost: 0
   selected: 0
+  filePath: 
 --- !u!1 &2921296717266066454
 GameObject:
   m_ObjectHideFlags: 0
