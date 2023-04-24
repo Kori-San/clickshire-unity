@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
     public GameObject potionInfoPrefab;
     public GameObject materialPrefab;
     public GameObject materialCraftPrefab;
+    public GameObject RecipeShopItemPrefab;
 
     /* Player's variables */
     [HideInInspector]
@@ -49,6 +50,7 @@ public class GameManager : MonoBehaviour
     private GameObject potionInfoContainer;
     private GameObject materialCraftContainer;
     private GameObject materialHDVContainer;
+    private GameObject recipeHDVContainer;
 
     /* Parameters */
     public string floatPrecision = "n2"; // Precision of float type used among all scripts
@@ -62,7 +64,9 @@ public class GameManager : MonoBehaviour
         potionInfoContainer = FindInActiveObjectByName("PotionInfoContainer");
         materialCraftContainer = FindInActiveObjectByName("MaterialContainer");
         materialHDVContainer = FindInActiveObjectByName("MaterialShop");
+        recipeHDVContainer = FindInActiveObjectByName("RecipeShop");
 
+        loadRecipes();
         loadPotions();
         loadPotionsInfo();
         loadAllMaterials();
@@ -146,6 +150,34 @@ public class GameManager : MonoBehaviour
 
                 potionInfoPrefabInstance.transform.SetParent(potionInfoContainer.transform);
             }
+    }
+
+    public void loadRecipes() {
+        foreach (Transform child in recipeHDVContainer.transform) {
+            GameObject.Destroy(child.gameObject);
+        }
+        foreach (Transform child in potionInfoContainer.transform) {
+            GameObject.Destroy(child.gameObject);
+        }
+
+        DirectoryInfo dir = new DirectoryInfo("Assets/Data/Potions");
+        FileInfo[] files = dir.GetFiles("*.json");
+
+        /* For each JSON file in the dir */
+        foreach (var file in files) {
+            /* Get content of file and create PotionItem */
+            string JSONContent = File.ReadAllText(file.FullName);
+
+            PotionItem potion = PotionItem.CreateFromJSON(JSONContent);
+            if (!potion.known) {
+                /* Create new potion prefab */
+                GameObject receipePrefabInstance = (GameObject)Instantiate(RecipeShopItemPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+                receipePrefabInstance.GetComponent<Receipe>().tempPotion = potion;
+                receipePrefabInstance.GetComponent<Receipe>().filePath = file.FullName;
+
+                receipePrefabInstance.transform.SetParent(recipeHDVContainer.transform);
+            }
+        }
     }
 
     public void loadAllMaterials()
