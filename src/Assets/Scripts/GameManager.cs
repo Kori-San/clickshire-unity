@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
     /* Prefabs */
     public GameObject potionPrefab;
     public GameObject materialPrefab;
+    public GameObject materialCraftPrefab;
 
     /* Player's variables */
     [HideInInspector]
@@ -55,8 +56,10 @@ public class GameManager : MonoBehaviour
     {
         gold = UserData.Load().gold;
         potionContainer = GameObject.Find("PotionContainer");
-        materialCraftContainer = GameObject.Find("MaterialContainer");
-        materialHDVContainer = GameObject.Find("Shop");
+
+        materialCraftContainer = FindInActiveObjectByName("MaterialContainer");
+
+        //materialHDVContainer = FindInActiveObjectByName("Shop");
 
         loadPotions();
         loadAllMaterials();
@@ -66,6 +69,22 @@ public class GameManager : MonoBehaviour
     void Update()
     {
 
+    }
+
+    public GameObject FindInActiveObjectByName(string name)
+    {
+        Transform[] objs = Resources.FindObjectsOfTypeAll<Transform>() as Transform[];
+        for (int i = 0; i < objs.Length; i++)
+        {
+            if (objs[i].hideFlags == HideFlags.None)
+            {
+                if (objs[i].name == name)
+                {
+                    return objs[i].gameObject;
+                }
+            }
+        }
+        return null;
     }
 
     public void loadPotions() {
@@ -101,12 +120,11 @@ public class GameManager : MonoBehaviour
     }
 
     public void loadAllMaterials()
-    {
-        loadMaterials(materialCraftContainer);
-        //loadMaterials(materialHDVContainer);
+    {   
+        loadMaterials(materialCraftContainer, materialCraftPrefab);
     }
 
-    public void loadMaterials(GameObject parent) {
+    public void loadMaterials(GameObject parent, GameObject prefab) {
         DirectoryInfo dir = new DirectoryInfo("Assets/Data/Materials");
         FileInfo[] files = dir.GetFiles("*.json");
 
@@ -115,15 +133,17 @@ public class GameManager : MonoBehaviour
             /* Get content of file and create PotionItem */
             string JSONContent = File.ReadAllText(file.FullName);
             MaterialItem material = MaterialItem.CreateFromJSON(JSONContent);
-            /* Create new potion prefab */
-            GameObject materialPrefabInstance = (GameObject)Instantiate(materialPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-
-            materialPrefabInstance.GetComponent<Material>().nameMaterial = material.name;
-            materialPrefabInstance.GetComponent<Material>().quantity = material.quantity;
-            materialPrefabInstance.GetComponent<Material>().selected = material.selected;
-            materialPrefabInstance.GetComponent<Material>().cost = material.cost;
-            materialPrefabInstance.GetComponent<Material>().filePath = file.FullName;
-            materialPrefabInstance.transform.SetParent(parent.transform);
+            
+            GameObject materialCraftPrefabInstance = (GameObject)Instantiate(prefab, new Vector3(0, 0, 0), Quaternion.identity);
+            
+            materialCraftPrefabInstance.GetComponent<Material>().nameMaterial = material.name;
+            materialCraftPrefabInstance.GetComponent<Material>().quantity = material.quantity;
+            materialCraftPrefabInstance.GetComponent<Material>().selected = material.selected;
+            materialCraftPrefabInstance.GetComponent<Material>().cost = material.cost;
+            materialCraftPrefabInstance.GetComponent<Material>().filePath = file.FullName;
+            //Debug.Log(prefabInstance);
+            //Debug.Log(file);
+            materialCraftPrefabInstance.transform.SetParent(parent.transform);
         }
     }
 }
