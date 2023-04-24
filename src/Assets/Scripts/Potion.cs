@@ -30,7 +30,7 @@ public class Potion : MonoBehaviour
 
     /* Levels */
     public int currentLevel; // Current Level of THIS Potion
-    private int targetLevel = 1; // Target Level is the level target by the upgrade button
+    private int targetLevel; // Target Level is the level target by the upgrade button
 
     // Start is called before the first frame update
     void Start()
@@ -49,10 +49,8 @@ public class Potion : MonoBehaviour
         upgradeButton = gameObjectFinder.transform.Find("UpgradeButton").gameObject;
         goldValue = gameObjectFinder.transform.Find("GoldValue").gameObject;
 
-        /* [TEMP] Set sellValue to the initValue */
-        currentValue = initValue;
+        currentValue = CalculateValue(currentLevel);
 
-        // [TODO] Load save 
         return;
     }
 
@@ -115,6 +113,11 @@ public class Potion : MonoBehaviour
         return targetCost;
     }
 
+    private float CalculateValue(int targetLevel)
+    {
+        return targetLevel * initValue;
+    }
+
     /// This function finds the maximum level that can be purchased based on the current level and available
     /// gold.
     /// 
@@ -160,7 +163,7 @@ public class Potion : MonoBehaviour
         }
 
         manager.gold -= currentCost;
-        currentValue = targetLevel * initValue;
+        currentValue = CalculateValue(targetLevel);
         currentLevel = targetLevel;
 
         PotionItem tempPotion = PotionItem.CreateFromPotion(this);
