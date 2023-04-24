@@ -49,19 +49,25 @@ public class Craft : MonoBehaviour
         
         DirectoryInfo dir = new DirectoryInfo("Assets/Data/Potions");
         FileInfo[] files = dir.GetFiles("*.json");
-
+        
+        foreach (var material in materialCraft)
+        {
+            material.quantity--;
+            material.selected = false;
+            material.ChangeBackground();
+        }
         foreach (var file in files) {
             string JSONContent = File.ReadAllText(file.FullName);
             PotionItem potion = PotionItem.CreateFromJSON(JSONContent);
-         
             if (potion.level == 0 && potion.materials.ToList().Intersect(materialNameCraft).Count() == potion.materials.ToList().Count())
             {
                 Debug.Log(true);
                 potion.level = 1;
                 potion.SaveToJSON(file.FullName);
                 manager.loadPotions();
-                return;
+                break;
             }
         }
+        materialCraft.Clear();
     } 
 }

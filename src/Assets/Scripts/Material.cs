@@ -51,8 +51,16 @@ public class Material : MonoBehaviour
 
     public void Click()
     {
+        if (quantity < 1)
+        {
+            return;
+        }
         selected = !selected;
+        ChangeBackground();
+    }
 
+    public void ChangeBackground()
+    {
         if (selected)
         {
             this.gameObject.GetComponent<Image>().color = Color.white;
