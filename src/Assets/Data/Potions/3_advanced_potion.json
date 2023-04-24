@@ -1,12 +1,1 @@
-{
-    "name": "advanced_potion",
-    "initCost": 18.69,
-    "initValue": 5.0,
-    "modifier": 5.35,
-    "level": 0,
-    "materials": [
-        "material2",
-        "material4"
-    ],
-    "known": false
-}
+{"name":"advanced_potion","initCost":18.690000534057618,"initValue":5.0,"modifier":5.349999904632568,"level":0,"materials":["material2","material4"],"known":true}

@@ -7,16 +7,13 @@ public class Receipe : MonoBehaviour
     private GameManager manager; 
     public string filePath;
 
-    public Potion potion;
-
-    
-    public float initCost;
-    public bool known;
+    public PotionItem tempPotion;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        GameObject gameObjectFinder = GameObject.Find("GameManager");
+        manager = gameObjectFinder.GetComponent<GameManager>();
     }
 
     // Update is called once per frame
@@ -27,7 +24,7 @@ public class Receipe : MonoBehaviour
 
     public void BuyRecipe()
     {
-        float cost = initCost * 1.5f;
+        float cost = tempPotion.initCost * 1.5f;
 
         if (manager.gold < cost)
         {
@@ -35,9 +32,12 @@ public class Receipe : MonoBehaviour
         }
 
         manager.gold -= cost;
-        known = true;
+        tempPotion.known = true;
 
-        PotionItem tempPotion = PotionItem.CreateFromPotion(potion);
+        //PotionItem tempPotion = PotionItem.CreateFromPotion(potion);
         tempPotion.SaveToJSON(filePath);
+        
+        manager.loadRecipes();
+        manager.loadPotionsInfo();
     }
 }
