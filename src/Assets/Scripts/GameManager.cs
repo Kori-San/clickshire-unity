@@ -155,6 +155,11 @@ public class GameManager : MonoBehaviour
     }
 
     public void loadMaterials(GameObject parent, GameObject prefab) {
+        foreach (Transform child in parent.transform) {
+            if (child != null) {
+                GameObject.Destroy(child.gameObject);
+            }
+        }
         DirectoryInfo dir = new DirectoryInfo("Assets/Data/Materials");
         FileInfo[] files = dir.GetFiles("*.json");
 
