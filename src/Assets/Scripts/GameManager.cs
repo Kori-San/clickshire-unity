@@ -52,17 +52,18 @@ public class GameManager : MonoBehaviour
     public float gold; // Total Gold of the player
     public int quantity; // Current quantity modifier - See QuantityModifier.cs for more details
 
+    private GameObject potionContainer;
+
     /* Parameters */
     public string floatPrecision = "n2"; // Precision of float type used among all scripts
 
     // Start is called before the first frame update
     void Start()
     {
-        // [TODO] Either load save or init save
-        // [TODO] Generate Potions and other tabs
-
         // [TEMP] Set gold to 0.
         gold = 0.0f;
+        potionContainer = GameObject.Find("PotionContainer");
+
         loadPotions();
     }
 
@@ -73,9 +74,7 @@ public class GameManager : MonoBehaviour
     }
 
     public void loadPotions() {
-        GameObject container = GameObject.Find("PotionContainer");
-
-        foreach (Transform child in container.transform) {
+        foreach (Transform child in potionContainer.transform) {
             GameObject.Destroy(child.gameObject);
         }
 
@@ -101,7 +100,7 @@ public class GameManager : MonoBehaviour
                 potionPrefabInstance.GetComponent<Potion>().materials = potion.materials;
                 potionPrefabInstance.GetComponent<Potion>().filePath = file.FullName;
 
-                potionPrefabInstance.transform.SetParent(container.transform);
+                potionPrefabInstance.transform.SetParent(potionContainer.transform);
             }
         }
     }
