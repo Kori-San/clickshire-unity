@@ -1,11 +1,1 @@
-{
-    "name": "basic_potion",
-    "initCost": 4.730000019073486,
-    "initValue": 1.5,
-    "modifier": 1.0199999809265137,
-    "level": 0,
-    "materials": [
-        "material1",
-        "material2"
-    ]
-}
+{"name":"basic_potion","initCost":4.730000019073486,"initValue":1.5,"modifier":1.0199999809265137,"level":413,"materials":["material1","material2"]}
