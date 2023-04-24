@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using UnityEngine.UI;
 using UnityEngine;
 using System.Linq;
 
@@ -27,7 +28,10 @@ public class Craft : MonoBehaviour
         foreach (GameObject materialGameObject in materials)
         {
             Material material = materialGameObject.GetComponent<Material>();
-
+            if (material.quantity == 0)
+            {
+                material.transform.GetChild(0).gameObject.GetComponent<Button>().interactable = false;
+            }
             if (material.selected && !materialCraft.Find(x => x == material))
             {
                 materialCraft.Add(material);
@@ -61,13 +65,11 @@ public class Craft : MonoBehaviour
             PotionItem potion = PotionItem.CreateFromJSON(JSONContent);
             if (potion.level == 0 && potion.materials.ToList().Intersect(materialNameCraft).Count() == potion.materials.ToList().Count())
             {
-                Debug.Log(true);
                 potion.level = 1;
                 potion.SaveToJSON(file.FullName);
                 manager.loadPotions();
                 break;
             }
         }
-        materialCraft.Clear();
     } 
 }

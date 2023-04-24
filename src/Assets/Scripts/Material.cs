@@ -1,5 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,16 +28,26 @@ public class MaterialItem {
         
         return returnedMaterial;
     }
+
+    public void SaveToJSON(string filePath)
+    {
+        string json = JsonUtility.ToJson(this) + Environment.NewLine;
+        File.WriteAllText(filePath, json);
+    }
 }
 
 public class Material : MonoBehaviour
 {
     private GameManager manager;
+
+    public string filePath;
  
     public string nameMaterial = "";
     public int quantity = 1;
     public float cost;
     public bool selected = false;
+
+    //public string filePath;
 
     // Start is called before the first frame update
     void Start()
@@ -74,5 +87,8 @@ public class Material : MonoBehaviour
     {
         manager.gold -= cost;
         quantity += 1;
+
+        MaterialItem tempMaterial = MaterialItem.CreateFromMaterial(this);
+        tempMaterial.SaveToJSON(filePath);
     }
 }

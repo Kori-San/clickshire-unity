@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - material
+  - materialsContainer
   layers:
   - Default
   - TransparentFX

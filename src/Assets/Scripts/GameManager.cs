@@ -36,6 +36,8 @@ public class GameManager : MonoBehaviour
 {
     /* Prefabs */
     public GameObject potionPrefab;
+    public GameObject materialPrefab;
+    public GameObject materialCraftPrefab;
 
     public GameObject potionInfoPrefab;
     public GameObject potionInfoContainer;
@@ -46,6 +48,8 @@ public class GameManager : MonoBehaviour
     public int quantity; // Current quantity modifier - See QuantityModifier.cs for more details
 
     private GameObject potionContainer;
+    private GameObject materialCraftContainer;
+    private GameObject materialHDVContainer;
 
     /* Parameters */
     public string floatPrecision = "n2"; // Precision of float type used among all scripts
@@ -56,15 +60,35 @@ public class GameManager : MonoBehaviour
         gold = UserData.Load().gold;
         potionContainer = GameObject.Find("PotionContainer");
 
-        loadPotions();
+        materialCraftContainer = FindInActiveObjectByName("MaterialContainer");
 
+        materialHDVContainer = FindInActiveObjectByName("MaterialShop");
+
+        loadPotions();
         loadPotionsInfo();
+        loadAllMaterials();
     }
 
     // Update is called once per frame
     void Update()
     {
 
+    }
+
+    public GameObject FindInActiveObjectByName(string name)
+    {
+        Transform[] objs = Resources.FindObjectsOfTypeAll<Transform>() as Transform[];
+        for (int i = 0; i < objs.Length; i++)
+        {
+            if (objs[i].hideFlags == HideFlags.None)
+            {
+                if (objs[i].name == name)
+                {
+                    return objs[i].gameObject;
+                }
+            }
+        }
+        return null;
     }
 
     public void loadPotions() {
@@ -111,6 +135,7 @@ public class GameManager : MonoBehaviour
         foreach (var file in files) {
             /* Get content of file and create PotionItem */
             string JSONContent = File.ReadAllText(file.FullName);
+
             PotionItem potion = PotionItem.CreateFromJSON(JSONContent);
 
                 /* Create new potion prefab */
@@ -122,5 +147,34 @@ public class GameManager : MonoBehaviour
 
                 potionInfoPrefabInstance.transform.SetParent(potionInfoContainer.transform);
             }
+    }
+
+    public void loadAllMaterials()
+    {   
+        loadMaterials(materialCraftContainer, materialCraftPrefab);
+        loadMaterials(materialHDVContainer, materialPrefab);
+    }
+
+    public void loadMaterials(GameObject parent, GameObject prefab) {
+        DirectoryInfo dir = new DirectoryInfo("Assets/Data/Materials");
+        FileInfo[] files = dir.GetFiles("*.json");
+
+        /* For each JSON file in the dir */
+        foreach (var file in files) {
+            /* Get content of file and create PotionItem */
+            string JSONContent = File.ReadAllText(file.FullName);
+            MaterialItem material = MaterialItem.CreateFromJSON(JSONContent);
+            
+            GameObject materialCraftPrefabInstance = (GameObject)Instantiate(prefab, new Vector3(0, 0, 0), Quaternion.identity);
+            
+            materialCraftPrefabInstance.GetComponent<Material>().nameMaterial = material.name;
+            materialCraftPrefabInstance.GetComponent<Material>().quantity = material.quantity;
+            materialCraftPrefabInstance.GetComponent<Material>().selected = material.selected;
+            materialCraftPrefabInstance.GetComponent<Material>().cost = material.cost;
+            materialCraftPrefabInstance.GetComponent<Material>().filePath = file.FullName;
+            //Debug.Log(prefabInstance);
+            //Debug.Log(file);
+            materialCraftPrefabInstance.transform.SetParent(parent.transform);
+        }
     }
 }
