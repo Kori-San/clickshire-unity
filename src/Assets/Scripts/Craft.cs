@@ -8,6 +8,7 @@ using System.Linq;
 
 public class Craft : MonoBehaviour
 {
+    public DialogTrigger dialogTrigger;
     private GameObject[] materials;
     private GameManager manager;
     
@@ -82,6 +83,9 @@ public class Craft : MonoBehaviour
             if (potion.level == 0 && potion.materials.ToList().Intersect(materialNameCraft).Count() == potion.materials.ToList().Count())
             {
                 potion.level = 1;
+                dialogTrigger.dialog.name = potion.dialog.name;
+                dialogTrigger.dialog.sentences = potion.dialog.sentences;
+                dialogTrigger.TriggerDialog();
                 potion.SaveToJSON(file.FullName);
                 manager.loadPotions();
                 break;
