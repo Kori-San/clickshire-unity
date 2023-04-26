@@ -7,7 +7,9 @@ using TMPro;
 public class DialogManager : MonoBehaviour
 {
     private Queue<string> sentences;
+    private string name;
     public TextMeshProUGUI dialogText;
+    public TextMeshProUGUI dialogName;
     public GameObject dialogBox;
     // Start is called before the first frame update
     void Start()
@@ -24,6 +26,7 @@ public class DialogManager : MonoBehaviour
     public void StartDialog(Dialog dialog)
     {
         Debug.Log("Starting conversation with " + dialog.name);
+        name = dialog.name;
         sentences.Clear();
         Debug.Log(dialog.sentences);
         foreach (string sentence in dialog.sentences)
@@ -43,6 +46,7 @@ public class DialogManager : MonoBehaviour
             return;
         }
         string sentence = sentences.Dequeue();
+        dialogName.text = name;
         dialogText.text = sentence;
     }
 

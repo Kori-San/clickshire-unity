@@ -80,8 +80,14 @@ public class Craft : MonoBehaviour
         foreach (var file in files) {
             string JSONContent = File.ReadAllText(file.FullName);
             PotionItem potion = PotionItem.CreateFromJSON(JSONContent);
+            Debug.Log(potion.name);
             if (potion.level == 0 && potion.materials.ToList().Intersect(materialNameCraft).Count() == potion.materials.ToList().Count())
             {
+                Debug.Log(file.FullName);
+                Debug.Log(file.FullName);
+                Debug.Log(file.FullName);
+                Debug.Log(file.FullName);
+                Debug.Log(file.FullName);
                 potion.level = 1;
                 dialogTrigger.dialog.name = potion.dialog.name;
                 dialogTrigger.dialog.sentences = potion.dialog.sentences;
