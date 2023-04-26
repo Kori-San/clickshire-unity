@@ -1,12 +1,19 @@
 {
-    "name": "disabled_potion",
-    "initCost": 18.69,
-    "initValue": 5.0,
-    "modifier": 5.35,
-    "level": 0,
-    "materials": [
-        "material0",
-        "material2"
-    ],
-    "known": true
+  "name": "disabled_potion",
+  "initCost": 18.69,
+  "initValue": 5.0,
+  "modifier": 5.35,
+  "level": 0,
+  "materials": [
+    "material1",
+    "material2"
+  ],
+  "known": true,
+  "dialog": {
+    "name": "Orc",
+    "sentences": [
+      "Achete mes potions enculé",
+      "Revenez me voir batard"
+    ]
+  }
 }

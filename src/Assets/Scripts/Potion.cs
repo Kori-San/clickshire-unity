@@ -20,6 +20,7 @@ public class PotionItem
     public int level;
     public string[] materials;
     public bool known;
+    public DialogItem dialog;
 
     public static PotionItem CreateFromJSON(string jsonString)
     {
@@ -36,6 +37,7 @@ public class PotionItem
         returnedPotion.modifier = potion.modifier;
         returnedPotion.level = potion.currentLevel;
         returnedPotion.materials = potion.materials;
+        //returnedPotion.dialog = potion.dialog;
 
         return returnedPotion;
     }
@@ -64,6 +66,7 @@ public class Potion : MonoBehaviour
     public float initValue; // Value of level 1
     public float modifier; // Cost modifier used for Cost Calculation
     public string[] materials;
+    public Dialog dialog;
 
     /* Current Value - Update every level */
     private float currentValue; // Value gained when clicking THIS Potion

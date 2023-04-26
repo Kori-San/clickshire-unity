@@ -119,6 +119,7 @@ public class GameManager : MonoBehaviour
                 potionPrefabInstance.GetComponent<Potion>().modifier = potion.modifier;
                 potionPrefabInstance.GetComponent<Potion>().currentLevel = potion.level;
                 potionPrefabInstance.GetComponent<Potion>().materials = potion.materials;
+                //potionPrefabInstance.GetComponent<Potion>().dialog = potion.dialog;
                 potionPrefabInstance.GetComponent<Potion>().filePath = file.FullName;
 
                 potionPrefabInstance.transform.SetParent(potionContainer.transform);

@@ -5,5 +5,12 @@
     "modifier": 0.5700000524520874,
     "level": 1,
     "materials": [],
-    "known": true
+    "known": true,
+    "dialog": {
+      "name": "Humain",
+      "sentences": [
+        "Bonjour, merci d'acheter mes potions",
+        "Revenez me voir bisous"
+      ]
+    }
 }
