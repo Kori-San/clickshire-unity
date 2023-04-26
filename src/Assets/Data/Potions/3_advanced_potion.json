@@ -1,1 +1,1 @@
-{"name":"advanced_potion","initCost":18.690000534057618,"initValue":5.0,"modifier":5.349999904632568,"level":0,"materials":["material2","material4"],"known":true}
+{"name":"advanced_potion","initCost":18.690000534057618,"initValue":5.0,"modifier":5.349999904632568,"level":1,"materials":["material2","material4"],"known":true,"dialog":{"name":"Tony","sentences":["Je suis un tony test"]}}

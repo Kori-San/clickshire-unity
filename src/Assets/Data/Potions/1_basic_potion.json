@@ -1,1 +1,1 @@
-{"name":"basic_potion","initCost":3.73799991607666,"initValue":1.0,"modifier":1.0700000524520875,"level":7,"materials":["material2","material3"],"known":false,"dialog":{"name":"","sentences":[]}}
+{"name":"basic_potion","initCost":3.73799991607666,"initValue":1.0,"modifier":1.0700000524520875,"level":1,"materials":["material2","material3"],"known":false,"dialog":{"name":"Humain","sentences":["Je suis un humain test"]}}
