@@ -1,0 +1,21 @@
+{
+    "name": "Minor Rejuvenation Potion",
+    "initCost": 5.34,
+    "initValue": 3.21,
+    "modifier": 1.04,
+    "level": 0,
+    "materials": [
+        "Crystal Vial",
+        "Mageroyal",
+        "Peacebloom"
+    ],
+    "known": false,
+    "dialog": {
+        "name": "Apothecary Helbrim",
+        "sentences": [
+            "You have rendered the spores I gave you into an emulsion.",
+            "I must now send it to my associate, Apothecary Zamah.",
+            "This emulsion will maintain its potency for only a short time, and must be resealed and processed before then."
+        ]
+    }
+}

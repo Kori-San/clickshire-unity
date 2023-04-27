@@ -1,0 +1,13 @@
+{
+    "name": "Minor Healing Potion",
+    "initCost": 0.05,
+    "initValue": 0.02,
+    "modifier": 1.01,
+    "level": 1,
+    "materials": [],
+    "known": true,
+    "dialog": {
+        "name": "",
+        "sentences": []
+    }
+}

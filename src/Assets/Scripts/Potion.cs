@@ -87,6 +87,7 @@ public class Potion : MonoBehaviour
 
         /* Store 'ClickButton' of THIS Potion */
         clickButton = transform.Find("ClickButton").gameObject;
+        clickButton.GetComponent<Image>().sprite = Resources.Load<Sprite>("Assets/Sprites/Potions/" + potionName + ".jpg");
 
         /* Store both 'UpgradeButton' AND 'GoldValue' of THIS Potion */
         upgradeButton = gameObjectFinder.transform.Find("UpgradeButton").gameObject;

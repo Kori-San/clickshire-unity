@@ -1,0 +1,21 @@
+{
+    "name": "Elixir of Minor Defense",
+    "initCost": 1.25,
+    "initValue": 4.21,
+    "modifier": 1.07,
+    "level": 0,
+    "materials": [
+        "Crystal Vial",
+        "Silverleaf"
+    ],
+    "known": false,
+    "dialog": {
+        "name": "Syral Bladeleaf",
+        "sentences": [
+            "Our herb and alchemy shop is booming.",
+            "These are nicely mixed.",
+            "You take great care in your trade...",
+            "And that is important for an alchemist."
+        ]
+    }
+}

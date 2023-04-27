@@ -1,0 +1,22 @@
+{
+    "name": "Healing Potion",
+    "initCost": 10.84,
+    "initValue": 7.14,
+    "modifier": 1.08,
+    "level": 0,
+    "materials": [
+        "Crystal Vial",
+        "Mageroyal",
+        "Briarthorn",
+        "Bruiseweed"
+    ],
+    "known": false,
+    "dialog": {
+        "name": "Charys Yserian",
+        "sentences": [
+            "Since the fall of Dalaran and the destruction of Quel'Thalas, wares of this sort have been hard to come by.",
+            "But You, Lucan Cordell and some of our other Tradesman have been doing a fine job of filling our orders with quality merchandise",
+            "Thank you !"
+        ]
+    }
+}
