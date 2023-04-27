@@ -51,13 +51,17 @@ public class Material : MonoBehaviour
     public bool selected = false;
 
     private GameObject materialName;
+    private GameObject materialQuantity;
     private GameObject materialNameShop;
+    TextMeshProUGUI objectQuantityText;
     // Start is called before the first frame update
     void Start()
     {
         GameObject gameObjectFinder = GameObject.Find("GameManager");
         manager = gameObjectFinder.GetComponent<GameManager>();
+
         materialName = transform.Find("MaterialName")?.gameObject;
+        materialQuantity = transform.Find("MaterialQuantity")?.gameObject;
         GameObject info = transform.Find("Informations")?.gameObject;
         GameObject buy = info?.transform.Find("BuyButton")?.gameObject;
         GameObject costObject = buy?.transform.Find("CostText")?.gameObject;
@@ -66,6 +70,7 @@ public class Material : MonoBehaviour
         materialNameShop = transform.Find("MaterialNameShop")?.gameObject;
 
         TextMeshProUGUI objectText = materialName?.GetComponent<TextMeshProUGUI>();
+        objectQuantityText = materialQuantity?.GetComponent<TextMeshProUGUI>();
         TextMeshProUGUI objectTextShop = info?.GetComponentInChildren<TextMeshProUGUI>();
         TextMeshProUGUI objectCostText = costObject?.GetComponentInChildren<TextMeshProUGUI>();
 
@@ -78,11 +83,19 @@ public class Material : MonoBehaviour
         if (objectCostText) {
             objectCostText.text = cost.ToString();
         }
+        if (objectQuantityText) {
+            objectQuantityText.text = quantity.ToString();
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (objectQuantityText)
+        {
+
+            objectQuantityText.text = quantity.ToString();
+        }
         
     }
 

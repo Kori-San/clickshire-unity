@@ -1,1 +1,1 @@
-{"name":"disabled_potion","initCost":18.690000534057618,"initValue":5.0,"modifier":5.349999904632568,"level":1,"materials":["material1","material2"],"known":true,"dialog":{"name":"Orc","sentences":["Achete mes potions enculé","Revenez me voir batard"]}}
+{"name":"disabled_potion","initCost":18.690000534057618,"initValue":5.0,"modifier":5.349999904632568,"level":1,"materials":["material1","material2"],"known":false,"dialog":{"name":"Orc","sentences":["Achete mes potions enculé","Revenez me voir batard"]}}
