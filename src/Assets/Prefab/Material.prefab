@@ -718,11 +718,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80833d4c69cbf3749801439b7857b234, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  filePath: 
   nameMaterial: 
   quantity: 1
   cost: 0
   selected: 0
-  filePath: 
 --- !u!1 &2921296717266066454
 GameObject:
   m_ObjectHideFlags: 0
@@ -737,7 +737,7 @@ GameObject:
   - component: {fileID: 2921296717266066457}
   - component: {fileID: 2921296717266066456}
   m_Layer: 5
-  m_Name: Name
+  m_Name: MaterialNameShop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -6,6 +6,9 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
+using TMPro;
+
+
 public class MaterialItem {
     public string name;
     public int quantity;
@@ -47,11 +50,34 @@ public class Material : MonoBehaviour
     public float cost;
     public bool selected = false;
 
+    private GameObject materialName;
+    private GameObject materialNameShop;
     // Start is called before the first frame update
     void Start()
     {
         GameObject gameObjectFinder = GameObject.Find("GameManager");
         manager = gameObjectFinder.GetComponent<GameManager>();
+        materialName = transform.Find("MaterialName")?.gameObject;
+        GameObject info = transform.Find("Informations")?.gameObject;
+        GameObject buy = info?.transform.Find("BuyButton")?.gameObject;
+        GameObject costObject = buy?.transform.Find("CostText")?.gameObject;
+
+        Debug.Log(costObject);
+        materialNameShop = transform.Find("MaterialNameShop")?.gameObject;
+
+        TextMeshProUGUI objectText = materialName?.GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI objectTextShop = info?.GetComponentInChildren<TextMeshProUGUI>();
+        TextMeshProUGUI objectCostText = costObject?.GetComponentInChildren<TextMeshProUGUI>();
+
+        if (objectText) {
+            objectText.text = nameMaterial;
+        }
+        if (objectTextShop) {
+            objectTextShop.text = nameMaterial;
+        }
+        if (objectCostText) {
+            objectCostText.text = cost.ToString();
+        }
     }
 
     // Update is called once per frame
