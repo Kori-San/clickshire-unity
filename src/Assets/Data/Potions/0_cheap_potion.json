@@ -1,1 +1,1 @@
-{"name":"cheap_potion","initCost":1.25,"initValue":0.5,"modifier":0.5700000524520874,"level":1,"materials":[],"known":false,"dialog":{"name":"Humain","sentences":["Je suis un test"]}}
+{"name":"cheap_potion","initCost":1.25,"initValue":0.5,"modifier":0.5700000524520874,"level":1,"materials":[],"known":true,"dialog":{"name":"Humain","sentences":["Je suis un test"]}}
