@@ -28,10 +28,8 @@ public class DialogManager : MonoBehaviour
         Debug.Log("Starting conversation with " + dialog.name);
         name = dialog.name;
         sentences.Clear();
-        Debug.Log(dialog.sentences);
         foreach (string sentence in dialog.sentences)
         {
-            Debug.Log(sentence);
             sentences.Enqueue(sentence);
         }
         dialogBox.SetActive(true);
